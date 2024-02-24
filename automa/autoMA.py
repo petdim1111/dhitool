@@ -14,6 +14,8 @@ def run(data):
     #Used as a limit when data can be concluded as "good enough"
     cvorg=data['value'].std()/data['value'].mean()
     
+    data.index = data.index.round('min')  # Avrunda tidsstämplarna till närmaste minut
+    data = data.groupby(data.index).mean()  # Gruppera data efter den avrundade tiden och ta medelvärdet
     #Resample data and calculate rolling mean
     dataResample = data.resample('min').interpolate(method='linear')
     dataRollingMean=dataResample.rolling(window=intTimeStep).mean()
