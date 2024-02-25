@@ -1,0 +1,13 @@
+# Använd en officiell Python-runtime som en förälder bild
+FROM jupyter/base-notebook:latest
+
+# Sätt arbetskatalogen i behållaren till /app
+WORKDIR /app
+
+# Ladda ner specifika filer från ditt GitHub-repositorium
+RUN wget https://github.com/petdim1111/dhitool/tree/master/docker/automa/requirements.txt
+RUN wget https://github.com/petdim1111/dhitool/tree/master/automa/_start.ipynb
+RUN wget https://github.com/petdim1111/dhitool/tree/master/automa/autoMA.py
+
+# Installera eventuella nödvändiga paket som specificeras i requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
