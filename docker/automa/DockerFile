@@ -5,9 +5,15 @@ FROM jupyter/base-notebook:latest
 WORKDIR /app
 
 # Ladda ner specifika filer från ditt GitHub-repositorium
-RUN wget https://github.com/petdim1111/dhitool/tree/master/docker/automa/requirements.txt
-RUN wget https://github.com/petdim1111/dhitool/tree/master/automa/_start.ipynb
-RUN wget https://github.com/petdim1111/dhitool/tree/master/automa/autoMA.py
+RUN wget https://raw.githubusercontent.com/petdim1111/dhitool/master/docker/automa/requirements.txt
+RUN wget https://raw.githubusercontent.com/petdim1111/dhitool/master/automa/_start.ipynb
+RUN wget https://raw.githubusercontent.com/petdim1111/dhitool/master/automa/autoMA.py
 
 # Installera eventuella nödvändiga paket som specificeras i requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Gör port 8866 tillgänglig för världen utanför denna behållare
+EXPOSE 8866
+
+# Kör voila på behållarens start
+CMD ["voila", "--port=8866", "--no-browser", "--enable_nbextensions=True"]
