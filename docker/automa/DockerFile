@@ -4,10 +4,8 @@ FROM jupyter/base-notebook:latest
 # Sätt arbetskatalogen i behållaren till /app
 WORKDIR /app
 
-# Ladda ner specifika filer från ditt GitHub-repositorium
-RUN wget https://raw.githubusercontent.com/petdim1111/dhitool/master/docker/automa/requirements.txt
-RUN wget https://raw.githubusercontent.com/petdim1111/dhitool/master/automa/_start.ipynb
-RUN wget https://raw.githubusercontent.com/petdim1111/dhitool/master/automa/autoMA.py
+# Kopiera specifika filer från din lokala katalog till behållaren
+COPY requirements.txt _start.ipynb autoMA.py ./
 
 # Installera eventuella nödvändiga paket som specificeras i requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
