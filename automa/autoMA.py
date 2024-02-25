@@ -14,8 +14,10 @@ def run(data):
     #Used as a limit when data can be concluded as "good enough"
     cvorg=data['value'].std()/data['value'].mean()
     
-    data.index = data.index.round('min')  # Avrunda tidsstämplarna till närmaste minut
-    data = data.groupby(data.index).mean()  # Gruppera data efter den avrundade tiden och ta medelvärdet
+    #Round time stamp to closest minute
+    data.index = data.index.round('min')
+    #Mean value of duplicated time stamps
+    data = data.groupby(data.index).mean()
     #Resample data and calculate rolling mean
     dataResample = data.resample('min').interpolate(method='linear')
     dataRollingMean=dataResample.rolling(window=intTimeStep).mean()
@@ -34,7 +36,7 @@ def run(data):
         cv2=dataTorture['value'].std()/dataTorture['value'].mean()
         return cv2, dataTorture
     
-    #Test if raw data reach set cvlimit, otherwise run MA-functions
+    #Test if raw data reach set cvlimit, otherwise run MA-function
     if (cvorg - cv1) > cvLimit:
         cv2 = 0
         for i in intTimeStepVector:
