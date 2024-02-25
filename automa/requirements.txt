@@ -1,3 +1,7 @@
 ipywidgets
 pandas
 plotly
+voila
+io
+importlib
+base64
